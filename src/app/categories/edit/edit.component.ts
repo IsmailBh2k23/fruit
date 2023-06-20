@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Fruits } from '../fruits';
-import { FruitsService } from '../fruits.service';
+import { Category } from '../category';
+import { CategoryService } from '../category.service';
  
 @Component({
   selector: 'app-edit',
@@ -9,21 +9,16 @@ import { FruitsService } from '../fruits.service';
   styleUrls: ['./edit.component.css'],
 })
 export class EditComponent implements OnInit {
-  fruitForm: Fruits = {
+  catForm: Category = {
     id: 0,
     name: '',
-    price: 0,
-    quantity: 0,
-    category: { 
-      id: 0,
-      name: '',
-      description: '',
-    },
+    description:'',
+    
   };
   constructor(
     private route: ActivatedRoute,
     private router:Router,
-    private fruitService: FruitsService
+    private categoryService: CategoryService
   ) {}
  
   ngOnInit(): void {
@@ -32,20 +27,18 @@ export class EditComponent implements OnInit {
       this.getById(id);
     });
   }
-
-  
  
   getById(id: number) {
-    this.fruitService.getById(id).subscribe((data) => {
-      this.fruitForm = data;
+    this.categoryService.getById(id).subscribe((data) => {
+      this.catForm = data;
     });
   }
  
   update() {
-    this.fruitService.update(this.fruitForm)
+    this.categoryService.update(this.catForm)
     .subscribe({
       next:(data) => {
-        this.router.navigate(["/fruits/home"]);
+        this.router.navigate(["/categories/home"]);
       },
       error:(err) => {
         console.log(err);

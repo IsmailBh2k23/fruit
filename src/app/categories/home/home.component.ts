@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Fruits } from '../fruits';
-import { FruitsService } from '../fruits.service';
-
- 
+import { CategoryService } from '../category.service';
+import { Category } from '../category';
 declare var window: any;
- 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  allFruits: Fruits[] = [];
+  allCategories: Category[] = [];
   deleteModal: any;
   idTodelete: number = 0;
  
-  constructor(private fruitService: FruitsService) {}
+  constructor(private categoryService: CategoryService) {}
  
   ngOnInit(): void {
     this.deleteModal = new window.bootstrap.Modal(
@@ -26,8 +24,8 @@ export class HomeComponent implements OnInit {
   }
  
   get() {
-    this.fruitService.get().subscribe((data) => {
-      this.allFruits = data;
+    this.categoryService.get().subscribe((data) => {
+      this.allCategories = data;
     });
   }
  
@@ -37,9 +35,9 @@ export class HomeComponent implements OnInit {
   }
  
   delete() {
-    this.fruitService.delete(this.idTodelete).subscribe({
+    this.categoryService.delete(this.idTodelete).subscribe({
       next: (data) => {
-        this.allFruits = this.allFruits.filter(_ => _.id != this.idTodelete)
+        this.allCategories = this.allCategories.filter(_ => _.id != this.idTodelete)
         this.deleteModal.hide();
       },
     });

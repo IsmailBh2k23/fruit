@@ -1,0 +1,7 @@
+.container {
+    display: flex;
+}
+.carousel-inner{
+    max-width: 100%;
+    height: 400px;;
+}
